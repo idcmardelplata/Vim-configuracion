@@ -15,6 +15,7 @@ endif
 " required for vundle
 filetype off
 
+execute pathogen#infect()
 set rtp+=~/.vim/bundle/vundle/
 call vundle#rc()
 
@@ -37,7 +38,7 @@ Bundle 'kien/ctrlp.vim'
 " Extension to ctrlp, for fuzzy command finder
 Bundle 'fisadev/vim-ctrlp-cmdpalette'
 " Zen coding
-"Bundle 'mattn/emmet-vim'
+Bundle 'mattn/emmet-vim'
 "Bundle 'emmet-vim'
 " Git integration
 Bundle 'motemen/git-vim'
@@ -57,14 +58,10 @@ Bundle 'tpope/vim-surround'
 Bundle 'Townk/vim-autoclose'
 " Indent text object
 Bundle 'michaeljsmith/vim-indent-object'
-" Python autocompletion and documentation
-Bundle 'davidhalter/jedi-vim'
 " Snippets manager (SnipMate), dependencies, and snippets repo
 Bundle 'MarcWeber/vim-addon-mw-utils'
 Bundle 'tomtom/tlib_vim'
-Bundle 'honza/vim-snippets'
-Bundle 'garbas/vim-snipmate'
-Bundle 'snipmate-snippets'
+
 Bundle 'nose.vim'
 " Git diff icons on the side of the file lines
 Bundle 'airblade/vim-gitgutter'
@@ -86,6 +83,11 @@ Bundle 'fisadev/vim-isort'
 
 " Bundles from vim-scripts repos
 
+"vimpress
+Bundle "PotHix/Vimpress"
+
+Bundle "wellle/targets.vim"
+
 " Autocompletion
 Bundle 'AutoComplPop'
 " Python code checker
@@ -103,13 +105,11 @@ Bundle 'abolish.vim'
 
 Bundle 'EasyMotion'
 
-Bundle 'textobj-user'
+Plugin 'kana/vim-textobj-user'
 
 Bundle 'textobj-line'
 
 Bundle 'vim-textobj-quoted'
-
-Bundle 'textobj-word-column.vim'
 
 Bundle 'argtextobj.vim'
 
@@ -121,31 +121,42 @@ Bundle 'vim-python-virtualenv'
 
 Bundle 'vimux'
 
-Bundle 'pytest.vim'
-
-Bundle 'vim_django'
-
-Bundle 'chapa'
-
-Bundle 'LustyExplorer'
-
 Bundle 'ack.vim'
 
 Bundle 'repeat.vim'
 
 Bundle 'VimRepress'
 
-Bundle "instant-markdown.vim"
-
 Bundle 'Shougo/vimproc'
+
+Bundle 'marijnh/tern_for_vim'
+
+Bundle "tpope/vim-dispatch"
+
+Bundle 'https://github.com/gorodinskiy/vim-coloresque.git'
+
+Plugin 'amoffat/snake'
+
+Plugin 'chrisbra/NrrwRgn'
+
+Plugin 'whatyouhide/vim-textobj-xmlattr'
+
+Plugin 'VisIncr'
+
+Bundle 'justinmk/vim-sneak'
+
+Bundle "tpope/vim-fugitive"
+
 
 let g:instant_markdown_slow = 1
 let g:instant_markdown_autostart = 0
 
 set hidden
 
-"Bundle 'vim-django-support'
+Bundle "vim-jade"
 
+Bundle 'othree/html5.vim'
+Bundle "reinh/vim-makegreen"
 " Apply g:pythonworkon to statusline
 let &statusline='%F%m%r%h%w [FORMAT=%{&ff}] [ENC=%{&fileencoding}] [TYPE=%Y] [ASCII=\%03.3b] [HEX=\%02.2B] [POS=%04l,%04v][%p%%] [LEN=%L] %= [WORKON=%{pythonworkon}]'
 
@@ -156,6 +167,31 @@ if iCanHazVundle == 0
     echo ""
     :BundleInstall
 endif
+
+call plug#begin('~/.vim/plugged')
+Plug 'junegunn/seoul256.vim'
+Plug 'junegunn/vim-easy-align'
+Plug 'SirVer/ultisnips' | Plug 'honza/vim-snippets'
+Plug 'lambdalisue/nodeunit.vim' , {'for': 'javascript'}
+Plug 'nose.vim', {'for': 'javascript'}
+Plug 'kchmck/vim-coffee-script' , {'for': 'coffee'}
+Plug 'instant-markdown.vim'     , {'for': 'markdown'}
+
+Plug 'pytest.vim', { 'for': 'python'}
+Plug 'vim_django', { 'for': 'python'}
+Plug 'chapa',      { 'for': 'python'}
+
+Plug 'airblade/vim-gitgutter' " Git diff icons on the side of the file lines
+Plug 'vim-scripts/indentpython.vim--nianyang', {'for': 'python'} " Better python indentation
+Plug 'nvie/vim-flake8', {'for': 'python'} " PEP8 and python-flakes checker
+Plug 'pydoc.vim', {'for': 'python'} " Search and read python documentation
+Plug 'fisadev/vim-isort', {'for': 'python'} " Automatically sort python imports
+Plug 'davidhalter/jedi-vim', {'for': 'python'} " Python autocompletion and documentation
+
+Plug 'neovimhaskell/haskell-vim', {'for': 'hs'}
+
+call plug#end()
+
 
 " allow plugins by file type
 filetype plugin on
@@ -168,10 +204,14 @@ set softtabstop=4
 set shiftwidth=4
 
 " tablength exceptions
-autocmd FileType html setlocal shiftwidth=2 tabstop=2 softtabstop=2
+autocmd FileType html,swig setlocal shiftwidth=2 tabstop=2 softtabstop=2
 autocmd FileType htmldjango setlocal shiftwidth=2 tabstop=2 softtabstop=2
 autocmd FileType javascript setlocal shiftwidth=2 tabstop=2 softtabstop=2
 
+"Configura emmet
+let g:user_emmet_install_global = 0
+autocmd FileType html,swig,css,scss EmmetInstall
+let g:user_emmet_leader_key='<C-Z>'
 
 " always show status bar
 set ls=2
@@ -223,6 +263,7 @@ imap <M-Left> <ESC><c-w>h
 imap <M-Up> <ESC><c-w>k
 imap <M-Down> <ESC><c-w>j
 
+imap <C-d> <Esc>wciw
 map -w :wq
 map -q :qa!
 map -e :q<CR>
@@ -332,7 +373,7 @@ let g:jedi#show_call_signatures = "1"
 nmap ,D :tab split<CR>,d
 
 " Change snipmate binding, to avoid problems with jedi-vim
-imap <C-i> <Plug>snipMateNextOrTrigger
+"imap <C-i> <Plug>snipMateNextOrTrigger
 
 " don't let pyflakes allways override the quickfix list
 let g:pyflakes_use_quickfix = 0
@@ -354,6 +395,8 @@ endif
 " colors for gvim
 if has('gui_running')
     colorscheme wombat
+    "set guifont=Neep\ 18
+    set guifont=Bitstream\ Vera\ Sans\ Mono\ 13.
 endif
 
 " when scrolling, keep cursor 3 lines away from screen border
@@ -404,3 +447,48 @@ set timeoutlen=500
 set textwidth=80
 set keywordprg=pman
 nmap <Space> :<Esc><Esc>:
+
+
+"Configura ultisnipts
+let g:UltinipsExpandTrigger="<tab>"
+let g:UltiSnipsJumpForwardTrigger="<c-b>"
+let g:UltiSnipsJumpBackwardTrigger="<c-z>"
+
+" If you want :UltiSnipsEdit to split your window.
+let g:UltiSnipsEditSplit="vertical"
+
+
+"set term=screen-256color
+let g:tern_map_keys = 1
+let g:tern_show_argument_hints='on_hold'
+
+au BufNewFile,BufRead *.i set filetype=swig
+au BufNewFile,BufRead *.swig set filetype=swig
+ 
+" Start interactive EasyAlign in visual mode (e.g. vip<Enter>)
+vmap <Enter> <Plug>(LiveEasyAlign)
+
+" Start interactive EasyAlign for a motion/text object (e.g. gaip)
+nmap ga <Plug>(LiveEasyAlign)
+
+
+"map <leader>a :tab split<CR>:Ack ""<Left>
+map <leader>a :Ack ""<Left>
+map <leader>A :tab split<CR>:Ack <C-r><C-w><CR>
+set ww=<,>,[,],h,l
+
+
+
+autocmd BufNewFile  *.jade	0r ~/.vim/templates/skeleton.jade
+set hlsearch!
+nnoremap <C-Space> :set hlsearch!<CR>
+
+"Configuracion para syntastic
+set statusline+=%#warningmsg#
+set statusline+=%{SyntasticStatuslineFlag()}
+set statusline+=%*
+
+let g:syntastic_always_populate_loc_list = 1
+let g:syntastic_auto_loc_list = 1
+let g:syntastic_check_on_open = 1
+let g:syntastic_check_on_wq = 0
