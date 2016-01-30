@@ -1,0 +1,47 @@
+{
+  "_meta": {
+    "sources": [
+      "loopback/common/models",
+      "loopback/server/models",
+      "../common/models",
+      "./models"
+    ],
+    "mixins": [
+      "loopback/common/mixins",
+      "loopback/server/mixins",
+      "../common/mixins",
+      "./mixins"
+    ]
+  },
+  "User": {
+    "dataSource": "noders_dev"
+  },
+  "AccessToken": {
+    "dataSource": "noders_dev",
+    "public": true
+  },
+  "ACL": {
+    "dataSource": "noders_dev",
+    "public": true
+  },
+  "RoleMapping": {
+    "dataSource": "noders_dev",
+    "public": true
+  },
+  "Role": {
+    "dataSource": "noders_dev",
+    "public": true
+  },
+  "perro": {
+    "dataSource": "noders_dev",
+    "public": true
+  },
+  "noder": {
+    "dataSource": "noders_dev",
+    "public": true
+  },
+  "miusuario": {
+    "dataSource": "noders_dev",
+    "public": true
+  }
+}

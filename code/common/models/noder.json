@@ -1,0 +1,41 @@
+{
+  "name": "noder",
+  "base": "PersistedModel",
+  "idInjection": true,
+  "options": {
+    "validateUpsert": true
+  },
+  "properties": {
+    "name": {
+      "type": "string",
+      "required": true
+    },
+
+    "edad_en_perro": {
+      "type": "number",
+      "required": false
+    }
+  },
+  "validations": [],
+  "relations": {
+    "perros": {
+      "type": "hasMany",
+      "model": "perro",
+      "foreignKey": ""
+    }
+  },
+  "acls": [
+      {
+          "accessType" : "*",
+          "principalType" : "ROLE",
+          "principalId" : "$everyone",
+          "permission" : "DENY"
+      },
+         {    "accessType" : "WRITE",
+              "principalType" : "ROLE",
+              "principalId" : "$authenticated",
+              "permission" : "ALLOW"
+          }
+  ],
+  "methods": {}
+}
